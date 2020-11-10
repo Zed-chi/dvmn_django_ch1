@@ -1,2 +1,4 @@
 ﻿afisha/db.sqlite3
 *.pyc
+afisha/media/images/
+.vscode/
