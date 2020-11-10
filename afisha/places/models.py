@@ -6,3 +6,6 @@ class Place(models.Model):
     description_long = models.TextField()    
     lat = models.FloatField()
     long = models.FloatField()
+
+    def __str__(self):
+        return self.title
