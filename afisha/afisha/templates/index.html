@@ -294,7 +294,7 @@
                 sidebarApp.loadingPlaceId = null;
             });
 
-            async function loadPlaceInfoOld(placeId, detailsUrl) {
+            async function loadPlaceInfo(placeId, detailsUrl) {
                 sidebarApp.selectedPlace = null;
                 sidebarApp.loadingPlaceId = placeId;
 
@@ -327,36 +327,7 @@
                         sidebarApp.loadingPlaceId = null;
                     }
                 }
-            }
-
-            async function loadPlaceInfo(placeId, detailsUrl) {
-                sidebarApp.selectedPlace = null;
-                sidebarApp.loadingPlaceId = placeId;
-
-                try {
-                    let data = detailsUrl;
-
-                    if (sidebarApp.loadingPlaceId != placeId) {
-                        // Place loading was cancelled by user
-                        return;
-                    }
-
-                    let mainPhotoSrc =
-                        (data.imgs.length && data.imgs[0]) || null;
-                    sidebarApp.selectedPlace = {
-                        title: data.title,
-                        placeId: placeId,
-                        mainPhotoSrc: mainPhotoSrc,
-                        imgs: data.imgs,
-                        short_description: data.description_short,
-                        long_description: data.description_long,
-                    };
-                } finally {
-                    if (sidebarApp.loadingPlaceId == placeId) {
-                        sidebarApp.loadingPlaceId = null;
-                    }
-                }
-            }
+            }            
         </script>
     </body>
 </html>

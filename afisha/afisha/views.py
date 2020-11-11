@@ -2,23 +2,17 @@ import json
 from django.http import HttpResponse
 from django.template import loader
 from places.models import Place, PlaceImage
+from places.views import get_place_json
+from django.urls import reverse
+
 
 
 
 def get_places_dict():
     result = {"type": "FeatureCollection","features": []}
     places = Place.objects.all()
-    for place in places:
-        detailsUrl = {
-            "title": place.title,
-            "imgs": [img.image.url for img in place.images.all()],
-            "description_short": place.description_short,
-            "description_long": place.description_long,
-            "coordinates": {
-                "lat": place.lat,
-                "lng": place.long
-            }
-        }
+    for place in places:        
+        detailsUrl = reverse("place", kwargs={"id":place.id})        
         placeInfo = {
             "type": "Feature",
             "geometry": {
