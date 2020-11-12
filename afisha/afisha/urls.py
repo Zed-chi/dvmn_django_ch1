@@ -16,17 +16,14 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
 from .views import index
 from places.views import get_place_json
 
 
-
-urlpatterns = [    
-    path("admin/", admin.site.urls),     
+urlpatterns = [
+    path("tinymce/", include("tinymce.urls")),
+    path("admin/", admin.site.urls),
     path("places/<int:id>", get_place_json, name="place"),
     path("", index, name="index"),
-] + static(
-    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
