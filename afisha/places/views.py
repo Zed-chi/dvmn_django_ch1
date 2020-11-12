@@ -2,7 +2,7 @@ import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
-from places.models import Place, PlaceImage
+from places.models import Place
 
 # Create your views here.
 def get_place_view(req, id):
