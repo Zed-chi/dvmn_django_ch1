@@ -1,11 +1,10 @@
-from django.contrib.admin.options import TabularInline
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
+from adminsortable2.admin import SortableInlineAdminMixin
 from .models import Place, PlaceImage
 
-# Register your models here.
+
 class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = PlaceImage
     readonly_fields = ("preview",)
@@ -33,7 +32,10 @@ class PlaceAdmin(admin.ModelAdmin):
     inlines = [
         PlaceImageInline,
     ]
-    search_fields = ["title",]
+    search_fields = [
+        "title",
+    ]
+
     class Meta:
         ordering = [
             "order",
