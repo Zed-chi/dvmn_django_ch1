@@ -33,7 +33,7 @@ class PlaceAdmin(admin.ModelAdmin):
     inlines = [
         PlaceImageInline,
     ]
-
+    search_fields = ["title",]
     class Meta:
         ordering = [
             "order",
