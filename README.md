@@ -22,6 +22,23 @@ SECRET_KEY=<уникальный набор символов>
 для доступа к административной панели требуется создать пользователя:
 `python manage.py createsuperuser`
 
+## Наполнение базы:
+`python manage.py load_place <адрес json файла>`
+json файл типа
+```
+{
+    "title": <НАЗВАНИЕ>,
+    "imgs": [ <ССЫЛКИ НА ФОТО ЧЕРЕЗ ЗАПЯТУЮ>       
+    ],
+    "description_short": <КОРОТКОЕ ОПИСАНИЕ>
+    "description_long": <ДЛИННОЕ ОПИСАНИЕ>,
+    "coordinates": {
+        "lng": <ДОЛГОТА>,
+        "lat": <ШИРОТА>
+    }
+}
+``` 
+
 ## Запуск:
 ```
 >> `python manage.py runserver`
