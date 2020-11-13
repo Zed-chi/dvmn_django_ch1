@@ -30,14 +30,19 @@ class Command(BaseCommand):
                 long=info["coordinates"]["lng"],
             )
             place.save()
+            self.stdout.write(self.style.NOTICE(f"Place {place.title} saved"))
             img_urls = info["imgs"]
             for order, url in enumerate(img_urls):
-                name = url.split("/")[-1]
-                image = PlaceImage()
-                image.image.save(name, BytesIO(requests.get(url).content), save=False)
-                image.order = order + 1
-                image.place = place
-                image.save()
+                try:
+                    name = url.split("/")[-1]
+                    image = PlaceImage()
+                    image.image.save(name, BytesIO(requests.get(url).content), save=False)
+                    image.order = order + 1
+                    image.place = place
+                    image.save()
+                    self.stdout.write(self.style.NOTICE(f"Image {name} saved"))
+                except (HTTPError, ConnectionError, FileExistsError, CommandError) as e:
+                    self.stdout.write(self.style.ERROR(e))
             self.stdout.write(self.style.SUCCESS("Successfully loaded new places"))
         except (HTTPError, ConnectionError, FileExistsError, CommandError) as e:
             self.stdout.write(self.style.ERROR(e))
