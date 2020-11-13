@@ -5,11 +5,6 @@ from django.template import loader
 from places.models import Place
 
 
-def get_place_view(req, id):
-    place = get_object_or_404(Place, pk=id)
-    return HttpResponse(place.title)
-
-
 def get_place_json(req, id):
     place = get_object_or_404(Place, pk=id)
     detailsUrl = {
