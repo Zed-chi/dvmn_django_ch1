@@ -19,6 +19,25 @@ class Command(BaseCommand):
         res = requests.get(url)
         return json.loads(res.text)
 
+    def load_image(self, order, url, place):
+        try:
+            name = url.split("/")[-1]
+            image = PlaceImage()
+            image.image.save(
+                name, BytesIO(requests.get(url).content), save=False
+            )
+            image.order = order + 1
+            image.place = place
+            image.save()
+            self.stdout.write(self.style.NOTICE(f"Image {name} saved"))
+        except (
+            HTTPError,
+            ConnectionError,
+            FileExistsError,
+            CommandError,
+        ) as e:
+            self.stdout.write(self.style.ERROR(e))
+
     def handle(self, *args, **options):
         try:
             info = self.get_dict_from_json(options["place_json_url"])
@@ -33,16 +52,14 @@ class Command(BaseCommand):
             self.stdout.write(self.style.NOTICE(f"Place {place.title} saved"))
             img_urls = info["imgs"]
             for order, url in enumerate(img_urls):
-                try:
-                    name = url.split("/")[-1]
-                    image = PlaceImage()
-                    image.image.save(name, BytesIO(requests.get(url).content), save=False)
-                    image.order = order + 1
-                    image.place = place
-                    image.save()
-                    self.stdout.write(self.style.NOTICE(f"Image {name} saved"))
-                except (HTTPError, ConnectionError, FileExistsError, CommandError) as e:
-                    self.stdout.write(self.style.ERROR(e))
-            self.stdout.write(self.style.SUCCESS("Successfully loaded new places"))
-        except (HTTPError, ConnectionError, FileExistsError, CommandError) as e:
+                self.load_image(order, url, place)
+            self.stdout.write(
+                self.style.SUCCESS("Successfully loaded new places")
+            )
+        except (
+            HTTPError,
+            ConnectionError,
+            FileExistsError,
+            CommandError,
+        ) as e:
             self.stdout.write(self.style.ERROR(e))
