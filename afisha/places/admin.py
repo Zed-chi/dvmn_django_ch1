@@ -44,6 +44,11 @@ class PlaceAdmin(admin.ModelAdmin):
 
 @admin.register(PlaceImage)
 class PlaceImageAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = super(PlaceImageAdmin, self).get_queryset(request)
+        qs = qs.select_related('place')        
+        return qs
+
     readonly_fields = ("preview",)
 
     def preview(self, obj):
