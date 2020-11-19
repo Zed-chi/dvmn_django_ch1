@@ -93,6 +93,7 @@
                 padding: 14px 20px;
                 height: 100%;
             }
+
             .select-place-prompt {
                 color: red;
                 width: 100px;
@@ -107,21 +108,21 @@
                 <img class="d-block select-place-prompt mb-4" src="{% static 'hand-pointer-regular.svg' %}" alt="Select place">
                 <h4>Выберите место на карте</h4>
               </div>
-              {% verbatim %}
+
               <div class="align-items-center justify-content-center d-flex" v-if="loading" style="height: 100%;">
                 <div class="spinner-grow text-light" style="width: 3rem; height: 3rem;" role="status">
                   <span class="sr-only">Loading...</span>
                 </div>
               </div>
-
+            {% verbatim %}
               <div class="place-description" v-if="selectedPlace">
 
                 <img v-if="mainPhotoSrc" v-bind:src="mainPhotoSrc" class="d-block shadow mb-3 rounded" v-bind:alt="selectedPlace.title">
-
+                
                 <h5 class="mb-3">{{ selectedPlace.title }}</h5>
 
                 <p>{{ selectedPlace.short_description }}</p>
-
+                
                 <div id="place-photos" class="carousel slide mb-3 shadow" data-ride="carousel" data-interval="5000">
                   <ol class="carousel-indicators">
                     <template v-for="(img, index) in carouselImgs" :key="img">
@@ -149,11 +150,12 @@
 
                 <div v-html="selectedPlace.long_description"></div>
               </div>
+            {% endverbatim %}
             </div>
         </script>
 
-        {% endverbatim %}
     </head>
+
     <body>
         <div id="sidebar">
             <div id="sidebar-app"></div>
@@ -177,27 +179,27 @@
 
             // FIXME should be hidden in production mode
             /*
-    L.control.custom({
-      position: 'bottomleft',
-      content: `
-        <label>
-            <input name="debug" type="checkbox" ${log.getLevel()<=1 && 'checked'}/>
-            Отладка
-        </label>`,
-      style: {
-        padding: '10px',
-        background: 'rgba(255, 255, 255, 0.7)',
-      },
-      events: {
-        click: event => {
-          if (event.target.name == 'debug'){
-            let level = event.target.checked && 'debug' || 'warn';
-            log.setLevel(level);
-            console.log(`Set log level: ${level}`)
-          }
-        },
+L.control.custom({
+  position: 'bottomleft',
+  content: `
+    <label>
+        <input name="debug" type="checkbox" ${log.getLevel()<=1 && 'checked'}/>
+        Отладка
+    </label>`,
+  style: {
+    padding: '10px',
+    background: 'rgba(255, 255, 255, 0.7)',
+  },
+  events: {
+    click: event => {
+      if (event.target.name == 'debug'){
+        let level = event.target.checked && 'debug' || 'warn';
+        log.setLevel(level);
+        console.log(`Set log level: ${level}`)
       }
-    }).addTo(map);*/
+    },
+  }
+}).addTo(map);*/
 
             function loadJSON(elementId) {
                 let element = document.getElementById(elementId);
