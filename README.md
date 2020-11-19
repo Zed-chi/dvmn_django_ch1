@@ -1,18 +1,14 @@
 # Сайт про события на карте
 
-Данные берутся с  "Яндекс.Афиши"  или подобных сайтов.
-
-[Пример сайта](http://zedchi.pythonanywhere.com/)
-
-[Административная часть сайта](http://zedchi.pythonanywhere.com/admin)
+Данные берутся с "Яндекс.Афиши" или подобных сайтов. [Пример сайта](http://zedchi.pythonanywhere.com/) и [его административная панель](http://zedchi.pythonanywhere.com/admin).
 
 ## Требования:
 - python 3.7
-- устанавленный pipenv, [инструкция по установке](https://pipenv.pypa.io/en/latest/install/#installing-pipenv)
+- установленный pipenv, [инструкция по установке](https://pipenv.pypa.io/en/latest/install/#installing-pipenv)
 
 ## Установка:
-- Клонировать репозиторий к себе
-- В папке проекта из консоли набрать `pipenv install`, дождаться установки
+- клонировать репозиторий к себе на компьютер
+- в папке проекта из консоли набрать `pipenv install`, дождаться установки
 - в папке afisha создать файл .env и прописать значения:
     ```
     DEBUG=<True или False>
