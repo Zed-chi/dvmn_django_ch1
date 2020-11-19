@@ -3,7 +3,7 @@
 
 ## Требования:
 - python 3.7
-- установленный pipenv, [инструкция по установке](https://pipenv.pypa.io/en/latest/install/#installing-pipenv)
+- установленный pipenv, [инструкция по установке](https://pipenv.pypa.io/en/latest/install/#installing-pipenv).
 
 ## Установка:
 - клонировать репозиторий к себе на компьютер
