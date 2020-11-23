@@ -1,5 +1,4 @@
 import os
-import json
 import requests
 from io import BytesIO
 from django.core.management.base import BaseCommand, CommandError
@@ -15,17 +14,18 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("place_json_url", type=str)
 
-    def get_dict_from_json(self, url):
-        res = requests.get(url)
-        return json.loads(res.text)
+    def load_resource_from(url):
+        response = requests.get(url)
+        if response.status_code >= 300:
+            raise HTTPError(f"Bad status code from {url}")
+        return response
 
     def load_image(self, order, url, place):
         try:
             name = url.split("/")[-1]
             image = PlaceImage()
-            image.image.save(
-                name, BytesIO(requests.get(url).content), save=False
-            )
+            image_content = self.load_resource_from(url).content
+            image.image.save(name, BytesIO(image_content), save=False)
             image.order = order + 1
             image.place = place
             image.save()
@@ -40,7 +40,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            info = self.get_dict_from_json(options["place_json_url"])
+            info = self.load_resource_from(options["place_json_url"]).json()
             place, created = Place.objects.get_or_create(
                 title=info["title"],
                 description_short=info["description_short"],
@@ -53,9 +53,7 @@ class Command(BaseCommand):
             img_urls = info["imgs"]
             for order, url in enumerate(img_urls):
                 self.load_image(order, url, place)
-            self.stdout.write(
-                self.style.SUCCESS("Successfully loaded new places")
-            )
+            self.stdout.write(self.style.SUCCESS("Successfully loaded new places"))
         except (
             HTTPError,
             ConnectionError,
