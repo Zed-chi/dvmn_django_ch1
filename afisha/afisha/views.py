@@ -1,9 +1,6 @@
-import json
-from django.http import HttpResponse
-from django.template import loader
-from places.models import Place, PlaceImage
-from places.views import get_place_json
+from django.shortcuts import render
 from django.urls import reverse
+from places.models import Place
 
 
 def get_places_dict():
@@ -29,7 +26,4 @@ def get_places_dict():
 
 def index(request):
     places = get_places_dict()
-    template = loader.get_template("index.html")
-    context = {"places": places}
-    rendered_page = template.render(context, request)
-    return HttpResponse(rendered_page)
+    return render(request, "index.html", context={"places": places})
