@@ -57,11 +57,8 @@ class PlaceImageAdmin(admin.ModelAdmin):
 
     def preview(self, obj):
         return format_html(
-            mark_safe(
-                '<img src="{url}" width="{width}" height={height} />'.format(
-                    url=obj.image.url,
-                    width="auto",
-                    height=200,
-                )
-            )
+            '<img src="{}" width="{}" height={} />',
+            obj.image.url,
+            "auto",
+            200,
         )
