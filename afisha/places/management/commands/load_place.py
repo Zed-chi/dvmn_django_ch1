@@ -31,34 +31,25 @@ class Command(BaseCommand):
             image.save()
             self.stdout.write(self.style.NOTICE(f"Image {name} saved"))
         except (
-            HTTPError,
-            ConnectionError,
-            FileExistsError,
-            CommandError,
+            HTTPError,            
+            FileExistsError,            
         ) as e:
             self.stdout.write(self.style.ERROR(e))
 
     def handle(self, *args, **options):
-        try:
-            info = self.load_resource_from(options["place_json_url"]).json()
-            place, created = Place.objects.get_or_create(
-                title=info["title"],
-                defaults={
-                    "description_short":info["description_short"],
-                    "description_long":info["description_long"],
-                    "lat":info["coordinates"]["lat"],
-                    "long":info["coordinates"]["lng"],
-                }        
-            )            
-            self.stdout.write(self.style.NOTICE(f"Place {place.title} saved"))
-            img_urls = info["imgs"]
-            for order, url in enumerate(img_urls, start=1):
-                self.load_image(order, url, place)
-            self.stdout.write(self.style.SUCCESS("Successfully loaded new places"))
-        except (
-            HTTPError,
-            ConnectionError,
-            FileExistsError,
-            CommandError,
-        ) as e:
-            self.stdout.write(self.style.ERROR(e))
+        info = self.load_resource_from(options["place_json_url"]).json()
+        place, created = Place.objects.get_or_create(
+            title=info["title"],
+            defaults={
+                "description_short":info["description_short"],
+                "description_long":info["description_long"],
+                "lat":info["coordinates"]["lat"],
+                "long":info["coordinates"]["lng"],
+            }        
+        )            
+        self.stdout.write(self.style.NOTICE(f"Place {place.title} saved"))
+        img_urls = info["imgs"]
+        for order, url in enumerate(img_urls, start=1):
+            self.load_image(order, url, place)
+        self.stdout.write(self.style.SUCCESS("Successfully loaded new places"))
+        
