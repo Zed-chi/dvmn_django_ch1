@@ -13,12 +13,15 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
     extra = 0
 
     def preview(self, obj):
-        return format_html(
-            '<img src="{}" width="{}" height={} />',
-            obj.image.url,
-            "auto",
-            200,
-        )
+        try:
+            return format_html(
+                '<img src="{}" width="{}" height={} />',
+                obj.image.url,
+                "auto",
+                200,
+            )
+        except ValueError as e:            
+            return "Изображение еще не загружено"
 
     class Meta:
         ordering = [
