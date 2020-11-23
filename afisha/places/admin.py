@@ -7,7 +7,9 @@ from .models import Place, PlaceImage
 
 class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = PlaceImage
-    readonly_fields = ("preview",)
+    readonly_fields = [
+        "preview",
+    ]
     extra = 0
 
     def preview(self, obj):
@@ -49,7 +51,9 @@ class PlaceImageAdmin(admin.ModelAdmin):
         qs = qs.select_related("place")
         return qs
 
-    readonly_fields = ("preview",)
+    readonly_fields = [
+        "preview",
+    ]
 
     def preview(self, obj):
         return format_html(
