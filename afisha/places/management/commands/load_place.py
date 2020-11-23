@@ -1,10 +1,13 @@
 import os
-import requests
 from io import BytesIO
-from django.core.management.base import BaseCommand, CommandError
-from places.models import Place, PlaceImage
+
 from afisha.settings import BASE_DIR
-from requests import HTTPError
+
+from django.core.management.base import BaseCommand
+
+from places.models import Place, PlaceImage
+
+import requests
 
 
 class Command(BaseCommand):
@@ -14,10 +17,10 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("place_json_url", type=str)
 
-    def load_resource_from(url):
+    def load_resource_from(self, url):
         response = requests.get(url)
         if response.status_code >= 300:
-            raise HTTPError(f"Bad status code from {url}")
+            raise requests.HTTPError(f"Bad status code from {url}")
         return response
 
     def load_image(self, order, url, place):
@@ -31,7 +34,7 @@ class Command(BaseCommand):
             image.save()
             self.stdout.write(self.style.NOTICE(f"Image {name} saved"))
         except (
-            HTTPError,
+            requests.HTTPError,
             FileExistsError,
         ) as e:
             self.stdout.write(self.style.ERROR(e))

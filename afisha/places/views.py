@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+
 from places.models import Place
 
 
@@ -13,5 +14,5 @@ def get_place_json(req, place_id):
         "coordinates": {"lat": place.lat, "lng": place.long},
     }
     return JsonResponse(
-        detailsUrl, safe=False, json_dumps_params={"ensure_ascii": False}
+        detailsUrl, safe=False, json_dumps_params={"ensure_ascii": False},
     )
