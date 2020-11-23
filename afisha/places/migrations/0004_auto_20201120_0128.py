@@ -8,64 +8,83 @@ import tinymce.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('places', '0003_auto_20201110_2245'),
+        ("places", "0003_auto_20201110_2245"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='place',
-            options={'ordering': ['title'], 'verbose_name': 'Место события', 'verbose_name_plural': 'Места событий'},
+            name="place",
+            options={
+                "ordering": ["title"],
+                "verbose_name": "Место события",
+                "verbose_name_plural": "Места событий",
+            },
         ),
         migrations.AlterModelOptions(
-            name='placeimage',
-            options={'ordering': ['order'], 'verbose_name': 'Фото события', 'verbose_name_plural': 'Фото событий'},
+            name="placeimage",
+            options={
+                "ordering": ["order"],
+                "verbose_name": "Фото события",
+                "verbose_name_plural": "Фото событий",
+            },
         ),
         migrations.RemoveField(
-            model_name='place',
-            name='description_long',
+            model_name="place",
+            name="description_long",
         ),
         migrations.RemoveField(
-            model_name='place',
-            name='description_short',
+            model_name="place",
+            name="description_short",
         ),
         migrations.AddField(
-            model_name='place',
-            name='long_description',
-            field=tinymce.models.HTMLField(blank=True, null=True, verbose_name='Детальное описание'),
+            model_name="place",
+            name="long_description",
+            field=tinymce.models.HTMLField(
+                blank=True, null=True, verbose_name="Детальное описание"
+            ),
         ),
         migrations.AddField(
-            model_name='place',
-            name='short_description',
-            field=models.TextField(blank=True, null=True, verbose_name='Короткое описание'),
+            model_name="place",
+            name="short_description",
+            field=models.TextField(
+                blank=True, null=True, verbose_name="Короткое описание"
+            ),
         ),
         migrations.AlterField(
-            model_name='place',
-            name='lat',
-            field=models.FloatField(verbose_name='Широта'),
+            model_name="place",
+            name="lat",
+            field=models.FloatField(verbose_name="Широта"),
         ),
         migrations.AlterField(
-            model_name='place',
-            name='long',
-            field=models.FloatField(verbose_name='Долгота'),
+            model_name="place",
+            name="long",
+            field=models.FloatField(verbose_name="Долгота"),
         ),
         migrations.AlterField(
-            model_name='place',
-            name='title',
-            field=models.CharField(max_length=255, verbose_name='Название'),
+            model_name="place",
+            name="title",
+            field=models.CharField(max_length=255, verbose_name="Название"),
         ),
         migrations.AlterField(
-            model_name='placeimage',
-            name='image',
-            field=models.ImageField(upload_to='./images', verbose_name='Файл изображения'),
+            model_name="placeimage",
+            name="image",
+            field=models.ImageField(
+                upload_to="./images", verbose_name="Файл изображения"
+            ),
         ),
         migrations.AlterField(
-            model_name='placeimage',
-            name='order',
-            field=models.IntegerField(default=1, verbose_name='Порядок'),
+            model_name="placeimage",
+            name="order",
+            field=models.IntegerField(default=1, verbose_name="Порядок"),
         ),
         migrations.AlterField(
-            model_name='placeimage',
-            name='place',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='places.Place', verbose_name='Место события'),
+            model_name="placeimage",
+            name="place",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="images",
+                to="places.Place",
+                verbose_name="Место события",
+            ),
         ),
     ]
