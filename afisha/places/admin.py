@@ -20,7 +20,7 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
                 "auto",
                 200,
             )
-        except ValueError as e:            
+        except ValueError as e:
             return "Изображение еще не загружено"
 
     class Meta:

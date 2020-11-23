@@ -7,25 +7,31 @@ import tinymce.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('places', '0004_auto_20201120_0128'),
+        ("places", "0004_auto_20201120_0128"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='place',
-            name='long_description',
-            field=tinymce.models.HTMLField(blank=True, default='', verbose_name='Детальное описание'),
+            model_name="place",
+            name="long_description",
+            field=tinymce.models.HTMLField(
+                blank=True, default="", verbose_name="Детальное описание"
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='place',
-            name='short_description',
-            field=models.TextField(blank=True, default='', verbose_name='Короткое описание'),
+            model_name="place",
+            name="short_description",
+            field=models.TextField(
+                blank=True, default="", verbose_name="Короткое описание"
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='place',
-            name='title',
-            field=models.CharField(max_length=255, unique=True, verbose_name='Название'),
+            model_name="place",
+            name="title",
+            field=models.CharField(
+                max_length=255, unique=True, verbose_name="Название"
+            ),
         ),
     ]
