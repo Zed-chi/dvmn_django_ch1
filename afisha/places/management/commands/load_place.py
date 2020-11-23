@@ -26,7 +26,7 @@ class Command(BaseCommand):
             image = PlaceImage()
             image_content = self.load_resource_from(url).content
             image.image.save(name, BytesIO(image_content), save=False)
-            image.order = order + 1
+            image.order = order
             image.place = place
             image.save()
             self.stdout.write(self.style.NOTICE(f"Image {name} saved"))
@@ -52,7 +52,7 @@ class Command(BaseCommand):
             )            
             self.stdout.write(self.style.NOTICE(f"Place {place.title} saved"))
             img_urls = info["imgs"]
-            for order, url in enumerate(img_urls):
+            for order, url in enumerate(img_urls, start=1):
                 self.load_image(order, url, place)
             self.stdout.write(self.style.SUCCESS("Successfully loaded new places"))
         except (
