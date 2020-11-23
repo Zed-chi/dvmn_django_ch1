@@ -10,7 +10,7 @@ def get_places_dict():
     result = {"type": "FeatureCollection", "features": []}
     places = Place.objects.all()
     for place in places:
-        detailsUrl = reverse("place", kwargs={"id": place.id})
+        detailsUrl = reverse("place", kwargs={"place_id": place.id})
         placeInfo = {
             "type": "Feature",
             "geometry": {

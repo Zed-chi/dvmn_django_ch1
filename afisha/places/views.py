@@ -1,12 +1,10 @@
-import json
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404
-from django.template import loader
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from places.models import Place
 
 
-def get_place_json(req, id):
-    place = get_object_or_404(Place, pk=id)
+def get_place_json(req, place_id):
+    place = get_object_or_404(Place, pk=place_id)
     detailsUrl = {
         "title": place.title,
         "imgs": [img.image.url for img in place.images.all()],
