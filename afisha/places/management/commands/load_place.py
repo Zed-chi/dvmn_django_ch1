@@ -20,26 +20,26 @@ class Command(BaseCommand):
         return response
 
     def load_image(self, order, url, place):
-        name = url.split("/")[-1]
+        image_name = url.split("/")[-1]
         image_content = self.load_resource_from(url).content
-        
+
         image = PlaceImage.objects.create(order=order, place=place)
-        image.image.save(name, BytesIO(image_content), save=False)
-        self.stdout.write(self.style.NOTICE(f"Image {name} saved"))
+        image.image.save(image_name, BytesIO(image_content), save=False)
+        self.stdout.write(self.style.NOTICE(f"Image {image_name} saved"))
 
     def handle(self, *args, **options):
-        info = self.load_resource_from(options["place_json_url"]).json()
+        place_details_json = self.load_resource_from(options["place_json_url"]).json()
         place, created = Place.objects.get_or_create(
-            title=info["title"],
+            title=place_details_json["title"],
             defaults={
-                "description_short": info["description_short"],
-                "description_long": info["description_long"],
-                "lat": info["coordinates"]["lat"],
-                "long": info["coordinates"]["lng"],
+                "description_short": place_details_json["description_short"],
+                "description_long": place_details_json["description_long"],
+                "lat": place_details_json["coordinates"]["lat"],
+                "long": place_details_json["coordinates"]["lng"],
             },
         )
         self.stdout.write(self.style.NOTICE(f"Place {place.title} saved"))
-        img_urls = info["imgs"]
+        img_urls = place_details_json["imgs"]
         for order, url in enumerate(img_urls, start=1):
             try:
                 self.load_image(order, url, place)
