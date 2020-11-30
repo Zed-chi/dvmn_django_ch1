@@ -28,7 +28,9 @@ class Command(BaseCommand):
         self.stdout.write(self.style.NOTICE(f"Image {image_name} saved"))
 
     def handle(self, *args, **options):
-        place_details_json = self.load_resource_from(options["place_json_url"]).json()
+        place_details_json = self.load_resource_from(
+            options["place_json_url"]
+        ).json()
         place, created = Place.objects.get_or_create(
             title=place_details_json["title"],
             defaults={
