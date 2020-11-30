@@ -16,8 +16,7 @@ class Command(BaseCommand):
 
     def load_resource_from(self, url):
         response = requests.get(url)
-        if response.status_code >= 300:
-            raise requests.HTTPError(f"Bad status code from {url}")
+        response.raise_for_status()        
         return response
 
     def load_image(self, order, url, place):
