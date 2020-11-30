@@ -21,13 +21,13 @@ class Command(BaseCommand):
 
     def load_image(self, order, url, place):
         try:
-            name = url.split("/")[-1]
-            image = PlaceImage()
+            name = url.split("/")[-1]            
             image_content = self.load_resource_from(url).content
-            image.image.save(name, BytesIO(image_content), save=False)
-            image.order = order
-            image.place = place
-            image.save()
+
+            image = PlaceImage.objects.create(
+                order=order, place=place
+            )
+            image.image.save(name, BytesIO(image_content), save=False)            
             self.stdout.write(self.style.NOTICE(f"Image {name} saved"))
         except (
             requests.HTTPError,
