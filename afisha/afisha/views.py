@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.urls import reverse
-
 from places.models import Place
 
 

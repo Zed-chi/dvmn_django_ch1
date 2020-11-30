@@ -1,8 +1,6 @@
 from adminsortable2.admin import SortableInlineAdminMixin
-
 from django.contrib import admin
 from django.utils.html import format_html
-
 
 from .models import Place, PlaceImage
 
@@ -15,15 +13,14 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
     extra = 0
 
     def preview(self, obj):
-        try:
+        if obj.image.url:
             return format_html(
-                '<img src="{}" width="{}" height={} />',
-                obj.image.url,
-                "auto",
-                200,
+                '<img src="{src}" width="{width}" height={height} />',
+                src=obj.image.url,
+                width="auto",
+                height=200,
             )
-        except ValueError:
-            return "Изображение еще не загружено"
+        return "Изображение еще не загружено"
 
     class Meta:
         ordering = [
@@ -60,9 +57,9 @@ class PlaceImageAdmin(admin.ModelAdmin):
     def preview(self, obj):
         if obj.url:
             return format_html(
-                '<img src="{}" width="{}" height={} />',
-                obj.image.url,
-                "auto",
-                200,
-            )        
+                '<img src="{src}" width="{width}" height={height} />',
+                src=obj.image.url,
+                width="auto",
+                height=200,
+            )
         return "Изображение еще не загружено"

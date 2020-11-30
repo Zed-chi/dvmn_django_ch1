@@ -1,13 +1,10 @@
 import os
 from io import BytesIO
 
-from afisha.settings import BASE_DIR
-
-from django.core.management.base import BaseCommand
-
-from places.models import Place, PlaceImage
-
 import requests
+from afisha.settings import BASE_DIR
+from django.core.management.base import BaseCommand
+from places.models import Place, PlaceImage
 
 
 class Command(BaseCommand):

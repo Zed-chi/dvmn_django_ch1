@@ -1,5 +1,4 @@
 from django.db import models
-
 from tinymce.models import HTMLField
 
 
@@ -33,7 +32,8 @@ class Place(models.Model):
 
 class PlaceImage(models.Model):
     image = models.ImageField(
-        upload_to="./images", verbose_name="Файл изображения",
+        upload_to="./images",
+        verbose_name="Файл изображения",
     )
     order = models.IntegerField(default=1, verbose_name="Порядок")
     place = models.ForeignKey(
