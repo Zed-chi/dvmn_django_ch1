@@ -58,12 +58,11 @@ class PlaceImageAdmin(admin.ModelAdmin):
     ]
 
     def preview(self, obj):
-        try:
+        if obj.url:
             return format_html(
                 '<img src="{}" width="{}" height={} />',
                 obj.image.url,
                 "auto",
                 200,
-            )
-        except ValueError:
-            return "Изображение еще не загружено"
+            )        
+        return "Изображение еще не загружено"
