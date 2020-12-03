@@ -12,8 +12,8 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
     ]
     extra = 0
 
-    def preview(self, obj):
-        if obj.image.url:
+    def preview(self, obj):        
+        if obj.image:
             return format_html(
                 '<img src="{src}" width="{width}" height={height} />',
                 src=obj.image.url,
@@ -21,7 +21,7 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
                 height=200,
             )
         return "Изображение еще не загружено"
-
+        
     class Meta:
         ordering = [
             "order",
@@ -55,7 +55,7 @@ class PlaceImageAdmin(admin.ModelAdmin):
     ]
 
     def preview(self, obj):
-        if obj.url:
+        if obj.image:
             return format_html(
                 '<img src="{src}" width="{width}" height={height} />',
                 src=obj.image.url,
