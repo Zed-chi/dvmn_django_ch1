@@ -1,4 +1,4 @@
-from adminsortable2.admin import SortableInlineAdminMixin
+from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminBase
 from django.contrib import admin
 from django.utils.html import format_html
 
@@ -12,7 +12,7 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
     ]
     extra = 0
 
-    def preview(self, obj):        
+    def preview(self, obj):
         if obj.image:
             return format_html(
                 '<img src="{src}" width="{width}" height={height} />',
@@ -21,7 +21,7 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
                 height=200,
             )
         return "Изображение еще не загружено"
-        
+
     class Meta:
         ordering = [
             "order",
@@ -29,7 +29,7 @@ class PlaceImageInline(SortableInlineAdminMixin, admin.TabularInline):
 
 
 @admin.register(Place)
-class PlaceAdmin(admin.ModelAdmin):
+class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     inlines = [
         PlaceImageInline,
     ]
